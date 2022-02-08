@@ -7,7 +7,7 @@
 #include "camera.h"
 
 //Sender
-uint8_t broadcast_Addr[]={0x9C,0x9C,0x1F,0xE9,0x04,0xF0};
+uint8_t custom_Addr[]={0x00,0x00,0x00,0x00,0x00,0x00};
 const char* ssid = "SSID";
 const char* password = "PASSWORD";
 //AsyncWebServer server(80);
@@ -51,6 +51,10 @@ Serial.begin(115200);
 Serial.setDebugOutput(false);
 WiFi.mode(WIFI_AP_STA);
 
+esp_wifi_set_mac(WIFI_IF_STA, &custom_Addr[0]);
+Serial.println("ESP MAC ADDRESS");
+Serial.println(WiFi.macAddress());
+
 camera_config_t config;
 startCamera(config);
 
@@ -63,14 +67,12 @@ startCamera(config);
   startCameraServer();
   
   Serial.println("Server started");
-pinMode(4,OUTPUT);
+  pinMode(4,OUTPUT);
   if (esp_now_init() != ESP_OK) {
     Serial.println("Error initializing ESP-NOW");
     return;
   }
   
-  // Once ESPNow is successfully Init, we will register for recv CB to
-  // get recv packer info
   esp_now_register_recv_cb(OnDataRecv);
 
 }
