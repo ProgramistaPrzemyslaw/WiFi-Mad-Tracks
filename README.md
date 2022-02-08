@@ -1,2 +1,2 @@
 # WiFi-Mad-Tracks
-IRL Mad Tracks via WiFi with use of ESP32 and ESP32 CAM
+IRL Mad Tracks via WiFi with use of ESP32 and ESP32 CAM. Communication between two ESP32's will be via ESP-NOW protocol. Additionally image from ESP32 Cam will be avalible to watch when user is connected to its AP.
