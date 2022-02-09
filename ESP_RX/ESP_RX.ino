@@ -13,12 +13,18 @@ const char* password = "PASSWORD";
 //AsyncWebServer server(80);
 WiFiServer server(80);
 
-
+const uint8_t PWM_RES = 12; //should be the same as ADC resolution on transmitting ESP in bits
+const uint8_t PWM_Channel = 1;
+const double PWM_Freq = 5000;
+const uint8_t PWM_Pin = 4;
+const uint8_t PWM_Test_Pin = 13;
 
 
 int dupa = 0;
 esp_err_t result;
+
 bool received = false;
+
 typedef struct msg{
 int a;
 int times;
@@ -28,8 +34,10 @@ int adc_data;
 msg rxData;
 
 void LED_LIGHT(){
-    digitalWrite(4,rxData.a);
-    delay(rxData.times);
+    if(rxData.a==0)
+    ledcWrite(PWM_Channel,rxData.a);
+    else
+    ledcWrite(PWM_Channel,rxData.adc_data);
 }
 
 void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len){
@@ -42,7 +50,7 @@ void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len){
   Serial.println(rxData.times);
   Serial.print("Int: ");
   Serial.println(rxData.adc_data);
-  received = true;
+  LED_LIGHT();
 }
 
 void setup(){
@@ -74,12 +82,12 @@ startCamera(config);
   }
   
   esp_now_register_recv_cb(OnDataRecv);
-
+  ledcSetup(PWM_Channel, PWM_Freq, PWM_RES);
+  ledcAttachPin(PWM_Pin,PWM_Channel);
+  ledcAttachPin(PWM_Test_Pin,PWM_Channel);
 }
 
+
 void loop(){
-    if(received){
-    LED_LIGHT();
-    received = false;
-    }
+    
 }

@@ -3,7 +3,7 @@
 
 //Sender
 //uint8_t broadcast_Addr[]={0xAC,0x67,0xB2,0x2C,0xC4,0x78};
-//uint8_t broadcast_Addr[]={0x08,0x3A,0xF2,0x6E,0x66,0x94}; //esp cam 2
+////uint8_t broadcast_Addr[]={0x08,0x3A,0xF2,0x6E,0x66,0x94}; //esp cam 2
 //uint8_t broadcast_Addr[]={0x9C,0x9C,0x1F,0xE9,0x04,0xF0};//ESP cam 1
 uint8_t broadcast_Addr[]={0x00,0x00,0x00,0x00,0x00,0x00};//test
 int dupa = 0;
@@ -49,14 +49,9 @@ void setup(){
 void loop(){
 
 
-
-if(digitalRead(18)==HIGH){
-dupa = 1;
-}
-
-if(digitalRead(18)==LOW && dupa==1){
+if(millis()%200){
     dupa=0;
-    Serial.println("button pressed\n");
+    Serial.println("Sending data...\n");
     sendData.adc_data = analogRead(34);
     Serial.println(sendData.adc_data);
     sendData.a = digitalRead(19);
