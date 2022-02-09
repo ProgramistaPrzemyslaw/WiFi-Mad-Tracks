@@ -7,11 +7,14 @@
 //uint8_t broadcast_Addr[]={0x9C,0x9C,0x1F,0xE9,0x04,0xF0};//ESP cam 1
 uint8_t broadcast_Addr[]={0x00,0x00,0x00,0x00,0x00,0x00};//test
 int dupa = 0;
+const uint8_t Y_Input_Pin = 34;
+const uint8_t X_Input_Pin = 33;
+
 esp_err_t result;
 typedef struct msg{
 int a;
-int time;
-int adc_data;
+int adc_y_data;
+int adc_x_data;
 }msg;
 
 msg sendData;
@@ -52,10 +55,10 @@ void loop(){
 if(millis()%200){
     dupa=0;
     Serial.println("Sending data...\n");
-    sendData.adc_data = analogRead(34);
-    Serial.println(sendData.adc_data);
+    sendData.adc_y_data = analogRead(Y_Input_Pin);
+    sendData.adc_x_data = analogRead(X_Input_Pin);
+    Serial.println(sendData.adc_y_data);
     sendData.a = digitalRead(19);
-    sendData.time = random(10,200);
     if(esp_now_send(broadcast_Addr,(uint8_t*)&sendData, sizeof(sendData))==ESP_OK){
         Serial.println("Data was send\n");
     }else{

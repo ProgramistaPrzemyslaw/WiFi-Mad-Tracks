@@ -27,8 +27,8 @@ bool received = false;
 
 typedef struct msg{
 int a;
-int times;
-int adc_data;
+int adc_y_data;
+int adc_x_data;
 }msg;
 
 msg rxData;
@@ -37,7 +37,7 @@ void LED_LIGHT(){
     if(rxData.a==0)
     ledcWrite(PWM_Channel,rxData.a);
     else
-    ledcWrite(PWM_Channel,rxData.adc_data);
+    ledcWrite(PWM_Channel,rxData.adc_y_data);
 }
 
 void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len){
@@ -47,9 +47,9 @@ void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len){
   Serial.print("Char: ");
   Serial.println(rxData.a);
   Serial.print("Int: ");
-  Serial.println(rxData.times);
+  Serial.println(rxData.adc_x_data);
   Serial.print("Int: ");
-  Serial.println(rxData.adc_data);
+  Serial.println(rxData.adc_y_data);
   LED_LIGHT();
 }
 
