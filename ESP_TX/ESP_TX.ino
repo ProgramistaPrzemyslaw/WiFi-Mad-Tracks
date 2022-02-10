@@ -52,7 +52,7 @@ void setup(){
 void loop(){
 
 
-if(millis()%200){
+if(millis()%200==0){
     dupa=0;
     Serial.println("Sending data...\n");
     sendData.adc_y_data = analogRead(Y_Input_Pin);

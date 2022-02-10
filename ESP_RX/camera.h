@@ -104,6 +104,11 @@
   #error "Camera model not selected"
 #endif
 
+static const char* _STREAM_CONTENT_TYPE = "multipart/x-mixed-replace;boundary=" PART_BOUNDARY;
+static const char* _STREAM_BOUNDARY = "\r\n--" PART_BOUNDARY "\r\n";
+static const char* _STREAM_PART = "Content-Type: image/jpeg\r\nContent-Length: %u\r\n\r\n";
+
+
 static esp_err_t stream_handler(httpd_req_t *req);
 void startCameraServer();
-void startCamera(camera_config_t &config);
+void startCamera(camera_config_t *config);
