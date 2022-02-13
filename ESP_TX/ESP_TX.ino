@@ -1,5 +1,4 @@
-#include <esp_now.h>
-#include <WiFi.h>
+#include "TXcontrol.h"
 
 //Sender
 //uint8_t broadcast_Addr[]={0xAC,0x67,0xB2,0x2C,0xC4,0x78};
@@ -10,14 +9,12 @@ int dupa = 0;
 const uint8_t Y_Input_Pin = 34;
 const uint8_t X_Input_Pin = 33;
 
-esp_err_t result;
-typedef struct msg{
-int a;
-int adc_y_data;
-int adc_x_data;
-}msg;
+
 
 msg sendData;
+
+joystick y_joystick;
+joystick x_joystick;
 
 
 void OnDataSend(const uint8_t *mac_addr,esp_now_send_status_t status){
@@ -52,7 +49,7 @@ void setup(){
 void loop(){
 
 
-if(millis()%200==0){
+if(millis()%100==0){
     dupa=0;
     Serial.println("Sending data...\n");
     sendData.adc_y_data = analogRead(Y_Input_Pin);

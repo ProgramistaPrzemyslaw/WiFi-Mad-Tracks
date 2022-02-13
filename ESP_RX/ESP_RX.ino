@@ -1,4 +1,6 @@
+
 #include "camera.h"
+#include "control.h"
 
 //Sender
 uint8_t custom_Addr[]={0x00,0x00,0x00,0x00,0x00,0x00};
@@ -9,32 +11,18 @@ const char* password = "PASSWORD";
 WiFiServer server(80);
 httpd_handle_t stream_httpd = NULL;
 
-const int PWM_RES = 12; //should be the same as ADC resolution on transmitting ESP in bits
-const int PWM_Channel = 10;
-const int PWM_Freq = 5000;
-const int PWM_Pin = 4;
-const int PWM_Test_Pin = 13;
+const uint8_t PWM_RES = 12; //should be the same as ADC resolution on transmitting ESP in bits
+const uint8_t PWM_Channel = 10;
+const double PWM_Freq = 5000;
+const uint8_t PWM_Pin = 4;
+const uint8_t PWM_Test_Pin = 13;
 
 
 int dupa = 0;
 //esp_err_t result;
 
-
-
-typedef struct msg{
-int a;
-int adc_y_data;
-int adc_x_data;
-}msg;
-
 msg rxData;
 
-void LED_LIGHT(){
-    if(rxData.a==0)
-    ledcWrite(PWM_Channel,rxData.a);
-    else
-    ledcWrite(PWM_Channel,rxData.adc_y_data);
-}
 
 void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len){
     memcpy(&rxData, incomingData,sizeof(rxData));
@@ -46,7 +34,7 @@ void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len){
   Serial.println(rxData.adc_x_data);
   Serial.print("Int: ");
   Serial.println(rxData.adc_y_data);
-  LED_LIGHT();
+  LED_LIGHT(PWM_Channel);
 }
 
 void setup(){
