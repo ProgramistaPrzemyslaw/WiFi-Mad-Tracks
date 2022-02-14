@@ -2,7 +2,7 @@
 #include <esp_now.h>
 #include <WiFi.h>
 
-esp_err_t result;
+//esp_err_t result;
 typedef struct msg{
 int a;
 int adc_y_data;
@@ -18,4 +18,5 @@ int min_ADC;
 }joystick;
 
 
-void init_joystick(joystick *joystick);
+void init_joystick(joystick *joystick, int inputPin);
+void zero_joysticks(joystick *joystick_y, joystick *joystick_x);

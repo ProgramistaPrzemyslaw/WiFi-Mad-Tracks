@@ -17,3 +17,4 @@ int adc_x_data;
 
 
 void LED_LIGHT(uint8_t PWM_Channel);
+void zero_joystick();

@@ -6,6 +6,7 @@
 //uint8_t broadcast_Addr[]={0x9C,0x9C,0x1F,0xE9,0x04,0xF0};//ESP cam 1
 uint8_t broadcast_Addr[]={0x00,0x00,0x00,0x00,0x00,0x00};//test
 int dupa = 0;
+
 const uint8_t Y_Input_Pin = 34;
 const uint8_t X_Input_Pin = 33;
 
@@ -43,7 +44,10 @@ void setup(){
         Serial.println("peer error\n");
         return;
     }
-    Serial.println("piwko\n");
+    init_joystick(&x_joystick,X_Input_Pin);
+    init_joystick(&y_joystick,Y_Input_Pin);
+    zero_joysticks(&y_joystick, &x_joystick);
+    Serial.printf("y:%d | x:%d", y_joystick.zero, x_joystick.zero);
 }
 
 void loop(){
