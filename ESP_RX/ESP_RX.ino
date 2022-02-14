@@ -15,7 +15,8 @@ const uint8_t PWM_RES = 8; //should be the same as ADC resolution on transmittin
 const uint8_t PWM_Channel = 10;
 const double PWM_Freq = 5000;
 const uint8_t PWM_Pin = 4;
-const uint8_t PWM_Test_Pin = 13;
+const uint8_t Enable1 = 13;
+const uint8_t Enable2 = 15;
 
 
 int dupa = 0;
@@ -35,7 +36,7 @@ void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len){
   Serial.println(rxData.adc_x_data);
   Serial.print("Int: ");
   Serial.println(rxData.adc_y_data);
-  LED_LIGHT(PWM_Channel);
+  //LED_LIGHT(PWM_Channel);
   
 }
 
@@ -85,7 +86,8 @@ void setup(){
 
   ledcSetup(PWM_Channel, PWM_Freq, PWM_RES);
   ledcAttachPin(PWM_Pin,PWM_Channel);
-  
+  pinMode(Enable1,OUTPUT);
+  pinMode(Enable2,OUTPUT);
   esp_now_register_recv_cb(OnDataRecv);
 
   // pinMode(PWM_Pin,OUTPUT);  
@@ -95,5 +97,5 @@ void setup(){
 
 
 void loop(){
-
+  motorControl(&rxData,PWM_Channel);
 }
