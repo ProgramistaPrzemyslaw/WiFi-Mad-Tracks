@@ -12,11 +12,16 @@ WiFiServer server(80);
 httpd_handle_t stream_httpd = NULL;
 
 const uint8_t PWM_RES = 8; //should be the same as ADC resolution on transmitting ESP in bits
+const uint8_t Servo_Res = 12;
 const uint8_t PWM_Channel = 10;
+const uint8_t Servo_Channel = 5;
 const double PWM_Freq = 5000;
-const uint8_t PWM_Pin = 4;
+const double Servo_Freq = 50;
+const uint8_t PWM_Pin = 2;
+const uint8_t Servo_Pin = 14;
 const uint8_t Enable1 = 13;
 const uint8_t Enable2 = 15;
+
 
 
 int dupa = 0;
@@ -88,6 +93,12 @@ void setup(){
   ledcAttachPin(PWM_Pin,PWM_Channel);
   pinMode(Enable1,OUTPUT);
   pinMode(Enable2,OUTPUT);
+
+  ledcSetup(Servo_Channel,Servo_Freq,Servo_Res);
+  ledcAttachPin(Servo_Pin, Servo_Channel);
+
+
+
   esp_now_register_recv_cb(OnDataRecv);
 
   // pinMode(PWM_Pin,OUTPUT);  
@@ -98,4 +109,5 @@ void setup(){
 
 void loop(){
   motorControl(&rxData,PWM_Channel);
+  servoControl(&rxData,Servo_Channel);
 }

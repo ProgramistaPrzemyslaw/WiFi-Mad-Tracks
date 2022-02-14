@@ -60,7 +60,6 @@ if(millis()%100==0 && dataTransfered==false){
     Serial.println("Sending data...\n");
     get_joysticks_data(&sendData, &y_joystick, &x_joystick);
     Serial.println(sendData.adc_y_data);
-    sendData.direction_x = digitalRead(19);
     if(esp_now_send(broadcast_Addr,(uint8_t*)&sendData, sizeof(sendData))==ESP_OK){
         Serial.println("Data was send\n");
     }else{

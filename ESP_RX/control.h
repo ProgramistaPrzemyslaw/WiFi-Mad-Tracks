@@ -8,6 +8,8 @@
 #include "Arduino.h"
 
 
+
+
 typedef struct msg{
 int direction_y;
 int direction_x;
@@ -20,3 +22,4 @@ uint8_t adc_x_data;
 void LED_LIGHT(uint8_t PWM_Channel);
 
 void motorControl(msg *Data, uint8_t PWM_Channel);
+void servoControl(msg *Data, uint8_t PWM_Channel);

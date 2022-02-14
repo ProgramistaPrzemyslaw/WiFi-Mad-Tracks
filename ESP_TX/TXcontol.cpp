@@ -40,11 +40,12 @@ void get_joysticks_data(msg *sendData,joystick *joystick_y, joystick *joystick_x
         sendData->adc_x_data = 0;
     }else if(data_x>0){         //forward
         sendData->direction_x=1;
-        sendData->adc_x_data=data_x/11;//left room for bonuses
+        sendData->adc_x_data=data_x/10;//left room for bonuses
     }else if(data_x<0){         //backward
         sendData->direction_x=0;
-        sendData->adc_x_data=abs(data_x)/20;
+        sendData->adc_x_data=abs(data_x)/10;
     }
+    
 }
 
 /*
@@ -60,5 +61,15 @@ void zero_joysticks(joystick *joystick_y, joystick *joystick_x){
 
     joystick_x->zero = cal_val_x/it;
     joystick_y->zero = cal_val_y/it;
+
+    if(abs(data_x)<100){
+        sendData->adc_x_data = 0;
+    }else if(data_x>0){         //forward
+        sendData->direction_x=1;
+        sendData->adc_x_data=data_x/10;//left room for bonuses
+    }else if(data_x<0){         //backward
+        sendData->direction_x=0;
+        sendData->adc_x_data=abs(data_x)/10;
+    }
 }
 */
