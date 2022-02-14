@@ -11,7 +11,7 @@ const char* password = "PASSWORD";
 WiFiServer server(80);
 httpd_handle_t stream_httpd = NULL;
 
-const uint8_t PWM_RES = 12; //should be the same as ADC resolution on transmitting ESP in bits
+const uint8_t PWM_RES = 8; //should be the same as ADC resolution on transmitting ESP in bits
 const uint8_t PWM_Channel = 10;
 const double PWM_Freq = 5000;
 const uint8_t PWM_Pin = 4;
@@ -30,7 +30,7 @@ void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len){
     Serial.print("Bytes received: ");
   Serial.println(len);
   Serial.print("Char: ");
-  Serial.println(rxData.a);
+  Serial.println(rxData.direction_x);
   Serial.print("Int: ");
   Serial.println(rxData.adc_x_data);
   Serial.print("Int: ");

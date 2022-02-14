@@ -9,9 +9,10 @@
 
 
 typedef struct msg{
-int a;
-int adc_y_data;
-int adc_x_data;
+int direction_y;
+int direction_x;
+uint8_t adc_y_data;
+uint8_t adc_x_data;
 }msg;
 
 

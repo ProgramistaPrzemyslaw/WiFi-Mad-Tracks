@@ -10,7 +10,7 @@ int dupa = 0;
 const uint8_t Y_Input_Pin = 34;
 const uint8_t X_Input_Pin = 33;
 
-
+bool dataTransfered = false;
 
 msg sendData;
 
@@ -47,25 +47,28 @@ void setup(){
     init_joystick(&x_joystick,X_Input_Pin);
     init_joystick(&y_joystick,Y_Input_Pin);
     zero_joysticks(&y_joystick, &x_joystick);
+
     Serial.printf("y:%d | x:%d", y_joystick.zero, x_joystick.zero);
 }
 
 void loop(){
 
 
-if(millis()%100==0){
+if(millis()%100==0 && dataTransfered==false){
+
     dupa=0;
     Serial.println("Sending data...\n");
-    sendData.adc_y_data = analogRead(Y_Input_Pin);
-    sendData.adc_x_data = analogRead(X_Input_Pin);
+    get_joysticks_data(&sendData, &y_joystick, &x_joystick);
     Serial.println(sendData.adc_y_data);
-    sendData.a = digitalRead(19);
+    sendData.direction_x = digitalRead(19);
     if(esp_now_send(broadcast_Addr,(uint8_t*)&sendData, sizeof(sendData))==ESP_OK){
         Serial.println("Data was send\n");
     }else{
         Serial.println("Error sending data\n");
     }
-
+    dataTransfered = true;
+}else if(millis()%100!=0 && dataTransfered==true){
+    dataTransfered = false;
 }
 
 }

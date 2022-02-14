@@ -23,6 +23,29 @@ void zero_joysticks(joystick *joystick_y, joystick *joystick_x){
     joystick_y->zero = cal_val_y/it;
 }
 
+void get_joysticks_data(msg *sendData,joystick *joystick_y, joystick *joystick_x){
+    int data_y=analogRead(joystick_y->inputPin)-joystick_y->zero;
+    int data_x=analogRead(joystick_x->inputPin)-joystick_x->zero;
+    if(abs(data_y)<100){
+        sendData->adc_y_data = 0;
+    }else if(data_y>0){         //forward
+        sendData->direction_y=1;
+        sendData->adc_y_data=data_y/11;//left room for bonuses
+    }else if(data_y<0){         //backward
+        sendData->direction_y=0;
+        sendData->adc_y_data=abs(data_y)/20;
+    }
+
+    if(abs(data_x)<100){
+        sendData->adc_x_data = 0;
+    }else if(data_x>0){         //forward
+        sendData->direction_x=1;
+        sendData->adc_x_data=data_x/11;//left room for bonuses
+    }else if(data_x<0){         //backward
+        sendData->direction_x=0;
+        sendData->adc_x_data=abs(data_x)/20;
+    }
+}
 
 /*
 void zero_joysticks(joystick *joystick_y, joystick *joystick_x){
