@@ -22,6 +22,10 @@ const uint8_t Servo_Pin = 14;
 const uint8_t Enable1 = 13;
 const uint8_t Enable2 = 15;
 
+const uint8_t Turn_Pin= 12;
+const uint8_t Enable1_1 = 13;
+const uint8_t Enable2_1 = 15;
+
 
 
 int dupa = 0;

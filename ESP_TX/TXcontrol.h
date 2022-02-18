@@ -16,6 +16,7 @@ int inputPin;
 int zero;
 int max_ADC;
 int min_ADC;
+int zero_max_factor;
 }joystick;
 
 

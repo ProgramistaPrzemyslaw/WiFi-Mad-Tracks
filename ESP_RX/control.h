@@ -23,3 +23,4 @@ void LED_LIGHT(uint8_t PWM_Channel);
 
 void motorControl(msg *Data, uint8_t PWM_Channel);
 void servoControl(msg *Data, uint8_t PWM_Channel);
+void turnControl(msg *Data, uint8_t PWM_Channel);
