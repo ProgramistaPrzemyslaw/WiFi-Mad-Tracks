@@ -26,30 +26,18 @@ void motorControl(msg *Data, uint8_t PWM_Channel){
 void servoControl(msg *Data, uint8_t PWM_Channel){
 
     int rotation = 0; 
-    
-   // Serial.println("__________________");
-   // Serial.println(Data->direction_x);
     if(Data->adc_x_data==0){
 
     rotation = 103;    //90 deg when you have 12 bit duty cycle resolution
 
     }else if(Data->direction_x==0){
-        rotation = -90;
-    //rotation = rotation - Data->adc_x_data;
-    //Serial.println(rotation);
-    /*
-    if(rotation<0){
-    rotation=0;
-    }*/
+
+    rotation = -90;
 
     }else if(Data->direction_x==1){
 
-    rotation = rotation + Data->adc_x_data;
-/*
-    if(rotation>205){
-    rotation=205;
-    }*/
     rotation = 295;
+
     }
     //Serial.println(rotation);
     rotation = 205 + rotation; // to achieve pulse with width of 1-2ms
