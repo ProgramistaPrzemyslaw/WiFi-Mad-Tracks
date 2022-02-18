@@ -4,7 +4,9 @@
 extern struct msg rxData;
 extern const uint8_t Enable1 = 13;
 extern const uint8_t Enable2 = 15;
-extern const uint8_t TEST_PIN = 12;
+
+const uint8_t Enable1_1 = 16;
+const uint8_t Enable2_1 = 0;
 
 
 void LED_LIGHT(uint8_t PWM_Channel){
@@ -51,18 +53,17 @@ void servoControl(msg *Data, uint8_t PWM_Channel){
 
 void turnControl(msg *Data, uint8_t PWM_Channel){
     bool direction = false;
-    if(Data->adc_x_data!=0){
 
-        digitalWrite(TEST_PIN,HIGH);
+    ledcWrite(PWM_Channel,Data->adc_x_data);
+    Serial.println(Data->adc_x_data);
+
     if(Data->direction_x==0){
-        digitalWrite(Enable1, direction);
-        digitalWrite(Enable2, !direction);
+        digitalWrite(Enable1_1, direction);
+        digitalWrite(Enable2_1, !direction);
     }else{
-        digitalWrite(Enable1, !direction);
-        digitalWrite(Enable2, direction);
+        digitalWrite(Enable1_1, !direction);
+        digitalWrite(Enable2_1, direction);
     }
 
-    }else{
-        digitalWrite(TEST_PIN,LOW);
-    }
+    
 }
