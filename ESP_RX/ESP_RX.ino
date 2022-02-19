@@ -24,8 +24,8 @@ const uint8_t Enable2 = 15;
 
 const uint8_t Turn_Channel = 7;
 const uint8_t Turn_Pin = 12;
-const uint8_t Enable1_1 = 16;
-const uint8_t Enable2_1 = 0;
+const uint8_t Enable1_1 = 1;
+const uint8_t Enable2_1 = 3;
 
 
 
@@ -40,18 +40,20 @@ void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len) {
   memcpy(&rxData, incomingData, sizeof(rxData));
   Serial.print("Bytes received: ");
   Serial.println(len);
-  Serial.print("Char: ");
+  Serial.print("dir x: ");
   Serial.println(rxData.direction_x);
-  Serial.print("Int: ");
+  Serial.print("adc x: ");
   Serial.println(rxData.adc_x_data);
-  Serial.print("Int: ");
+  Serial.print("adc y: ");
   Serial.println(rxData.adc_y_data);
+  Serial.print("dir y: ");
+  Serial.println(rxData.direction_y);
   //LED_LIGHT(PWM_Channel);
 
 }
 
 void setup() {
-  // WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
+   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
 
 
   Serial.begin(115200);
@@ -61,14 +63,9 @@ void setup() {
 
   startCamera(&config);
 
-  esp_err_t err = esp_camera_init(&config);
 
-  if (err != ESP_OK) {
-    Serial.printf("Camera init failed with error 0x%x", err);
-    return;
-  } else {
-    Serial.println("Camera init good startCamera");
-  }
+
+
   WiFi.mode(WIFI_AP_STA);
 
   esp_wifi_set_mac(WIFI_IF_STA, &custom_Addr[0]);
@@ -101,6 +98,7 @@ void setup() {
 
   ledcSetup(Turn_Channel, PWM_Freq, PWM_RES);
   ledcAttachPin(Turn_Pin, Turn_Channel);
+  
   pinMode(Enable1_1, OUTPUT);
   pinMode(Enable2_1, OUTPUT);
 

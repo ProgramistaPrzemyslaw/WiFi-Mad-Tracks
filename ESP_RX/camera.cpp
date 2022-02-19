@@ -9,7 +9,7 @@ static esp_err_t stream_handler(httpd_req_t *req){
   size_t _jpg_buf_len = 0;
   uint8_t * _jpg_buf = NULL;
   char * part_buf[64];
-
+  
   res = httpd_resp_set_type(req, _STREAM_CONTENT_TYPE);
   if(res != ESP_OK){
     Serial.println("httpd_resp_set_type failed");
@@ -116,5 +116,12 @@ void startCamera(camera_config_t *config){
   }
   
   // Camera init
+    esp_err_t err = esp_camera_init(config);
+    if (err != ESP_OK) {
+    Serial.printf("Camera init failed with error 0x%x", err);
+    return;
+  } else {
+    Serial.println("Camera init good startCamera");
+  }
 
 }

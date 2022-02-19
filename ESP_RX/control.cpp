@@ -5,8 +5,8 @@ extern struct msg rxData;
 extern const uint8_t Enable1 = 13;
 extern const uint8_t Enable2 = 15;
 
-const uint8_t Enable1_1 = 16;
-const uint8_t Enable2_1 = 0;
+extern const uint8_t Enable1_1 = 1;
+extern const uint8_t Enable2_1 = 3;
 
 
 void LED_LIGHT(uint8_t PWM_Channel){
@@ -17,7 +17,7 @@ void LED_LIGHT(uint8_t PWM_Channel){
 void motorControl(msg *Data, uint8_t PWM_Channel){
     bool direction = false;
     ledcWrite(PWM_Channel,Data->adc_y_data);
-    Serial.println(Data->adc_y_data);
+    //Serial.println(Data->adc_y_data);
     if(Data->direction_y==0){
         digitalWrite(Enable1, direction);
         digitalWrite(Enable2, !direction);
@@ -52,17 +52,17 @@ void servoControl(msg *Data, uint8_t PWM_Channel){
 
 
 void turnControl(msg *Data, uint8_t PWM_Channel){
-    bool direction = false;
+    bool dir = false;
 
     ledcWrite(PWM_Channel,Data->adc_x_data);
-    Serial.println(Data->adc_x_data);
+   // Serial.println(Data->adc_x_data);
 
     if(Data->direction_x==0){
-        digitalWrite(Enable1_1, direction);
-        digitalWrite(Enable2_1, !direction);
+        digitalWrite(Enable1_1, dir);
+        digitalWrite(Enable2_1, !dir);
     }else{
-        digitalWrite(Enable1_1, !direction);
-        digitalWrite(Enable2_1, direction);
+        digitalWrite(Enable1_1, !dir);
+        digitalWrite(Enable2_1, dir);
     }
 
     
