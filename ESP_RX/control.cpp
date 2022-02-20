@@ -5,7 +5,7 @@ extern struct msg rxData;
 extern const uint8_t Enable1 = 13;
 extern const uint8_t Enable2 = 15;
 
-extern const uint8_t Enable1_1 = 1;
+extern const uint8_t Enable1_1 = 14;
 extern const uint8_t Enable2_1 = 3;
 
 

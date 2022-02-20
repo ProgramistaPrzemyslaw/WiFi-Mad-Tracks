@@ -124,4 +124,6 @@ void startCamera(camera_config_t *config){
     Serial.println("Camera init good startCamera");
   }
 
+  sensor_t *sensor = esp_camera_sensor_get();
+
 }

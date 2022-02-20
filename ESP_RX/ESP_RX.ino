@@ -18,13 +18,13 @@ const uint8_t Servo_Channel = 5;
 const double PWM_Freq = 5000;
 const double Servo_Freq = 50;
 const uint8_t PWM_Pin = 2;
-const uint8_t Servo_Pin = 14;
+//const uint8_t Servo_Pin = 14;
 const uint8_t Enable1 = 13;
 const uint8_t Enable2 = 15;
 
 const uint8_t Turn_Channel = 7;
 const uint8_t Turn_Pin = 12;
-const uint8_t Enable1_1 = 1;
+const uint8_t Enable1_1 = 14;
 const uint8_t Enable2_1 = 3;
 
 
@@ -103,7 +103,7 @@ void setup() {
   pinMode(Enable2_1, OUTPUT);
 
   ledcSetup(Servo_Channel, Servo_Freq, Servo_Res);
-  ledcAttachPin(Servo_Pin, Servo_Channel);
+  //ledcAttachPin(Servo_Pin, Servo_Channel);
 
 
 
@@ -118,6 +118,6 @@ void setup() {
 
 void loop() {
   motorControl(&rxData, PWM_Channel);
-  servoControl(&rxData, Servo_Channel);
+  //servoControl(&rxData, Servo_Channel);
   turnControl(&rxData, Turn_Channel);
 }
