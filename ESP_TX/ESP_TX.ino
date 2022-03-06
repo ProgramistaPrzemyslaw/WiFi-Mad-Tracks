@@ -4,11 +4,13 @@
 //uint8_t broadcast_Addr[]={0xAC,0x67,0xB2,0x2C,0xC4,0x78};
 ////uint8_t broadcast_Addr[]={0x08,0x3A,0xF2,0x6E,0x66,0x94}; //esp cam 2
 //uint8_t broadcast_Addr[]={0x9C,0x9C,0x1F,0xE9,0x04,0xF0};//ESP cam 1
-uint8_t broadcast_Addr[]={0x00,0x00,0x00,0x00,0x00,0x00};//test
+uint8_t broadcast_Addr[]={0x00,0x00,0x00,0x00,0x00,0x69};//test
 int dupa = 0;
 
 const uint8_t Y_Input_Pin = 34;
 const uint8_t X_Input_Pin = 33;
+const uint8_t macAddr_pin1 = 18;
+const uint8_t macAddr_pin2 = 19;
 
 bool dataTransfered = false;
 
@@ -24,8 +26,9 @@ void OnDataSend(const uint8_t *mac_addr,esp_now_send_status_t status){
 }
 
 void setup(){
-    pinMode(18,INPUT_PULLUP);
-    pinMode(19,INPUT_PULLUP);
+    pinMode(macAddr_pin1,INPUT_PULLUP);
+    pinMode(macAddr_pin2,INPUT_PULLUP);
+
     Serial.begin(115200);
     WiFi.mode(WIFI_STA);
 
@@ -48,13 +51,17 @@ void setup(){
     init_joystick(&y_joystick,Y_Input_Pin);
     zero_joysticks(&y_joystick, &x_joystick);
 
+
+    broadcast_Addr[4] = (uint8_t)digitalRead(macAddr_pin1);
+    broadcast_Addr[5] = (uint8_t)digitalRead(macAddr_pin2);
+
     Serial.printf("y:%d | x:%d", y_joystick.zero, x_joystick.zero);
 }
 
 void loop(){
 
 
-if(millis()%100==0 && dataTransfered==false){
+if(millis()%500==0 && dataTransfered==false){
 
     dupa=0;
     Serial.println("Sending data...\n");
@@ -68,7 +75,7 @@ if(millis()%100==0 && dataTransfered==false){
         Serial.println("Error sending data\n");
     }
     dataTransfered = true;
-}else if(millis()%100!=0 && dataTransfered==true){
+}else if(millis()%500!=0 && dataTransfered==true){
     dataTransfered = false;
 }
 

@@ -51,6 +51,7 @@ void get_joysticks_data(msg *sendData,joystick *joystick_y, joystick *joystick_x
     
 }
 
+
 /*
 void zero_joysticks(joystick *joystick_y, joystick *joystick_x){
     int cal_val_x = 0;
